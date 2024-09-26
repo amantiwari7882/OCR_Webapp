@@ -1,10 +1,11 @@
 import easyocr
 import numpy as np
 from PIL import Image
+import io
 
-def ocr_image(image):
-    # Convert BytesIO object to PIL Image
-    image = Image.open(image)
+def ocr_image(uploaded_file):
+    # Read the uploaded file as a PIL Image
+    image = Image.open(uploaded_file)
 
     # Convert the image to an array
     image_np = np.array(image)

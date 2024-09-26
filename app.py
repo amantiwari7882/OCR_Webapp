@@ -1,31 +1,23 @@
 import streamlit as st
 from ocr_processing import ocr_image
-from PIL import Image
 
-st.title("OCR and Document Search Web App")
 
-# Image uploader
-uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+def main():
+    st.title("OCR Document Search Web App")
 
-if uploaded_file is not None:
-    # Load the image
-    image = Image.open(uploaded_file)
+    # Upload image
+    uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
-    # Display the uploaded image
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    if uploaded_file is not None:
+        # Call the OCR function
+        extracted_text = ocr_image(uploaded_file)
 
-    # Perform OCR
-    st.write("Extracting text...")
-    extracted_text = ocr_image(image)
+        # Display the extracted text
+        st.write("Extracted Text:")
+        st.write(extracted_text)
 
-    # Display extracted text
-    st.text_area("Extracted Text", extracted_text)
+        # Add keyword search functionality if needed...
 
-    # Search functionality
-    search_query = st.text_input("Enter keyword to search")
 
-    if search_query:
-        if search_query.lower() in extracted_text.lower():
-            st.write(f"Keyword '{search_query}' found in the text.")
-        else:
-            st.write(f"Keyword '{search_query}' not found.")
+if __name__ == "__main__":
+    main()
