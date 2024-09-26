@@ -1,6 +1,4 @@
 streamlit
-Pillow
-pytesseract
-torch
-transformers
 easyocr
+Pillow
+numpy
