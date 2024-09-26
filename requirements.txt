@@ -3,3 +3,4 @@ Pillow
 pytesseract
 torch
 transformers
+easyocr

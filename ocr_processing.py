@@ -1,10 +1,7 @@
-import pytesseract
-from PIL import Image
-
-# Set the path to the Tesseract executable
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+import easyocr
 
 def ocr_image(image):
-    """Process an image and extract text using pytesseract"""
-    extracted_text = pytesseract.image_to_string(image, lang='eng+hin')  # For English and Hindi
+    reader = easyocr.Reader(['en', 'hi'])  # Specify the languages you want to use
+    results = reader.readtext(image, detail=0)  # Extract text
+    extracted_text = ' '.join(results)  # Join the results into a single string
     return extracted_text
