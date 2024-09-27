@@ -1,6 +1,7 @@
-transformers
-torch
-gradio
 streamlit
+pillow
 pytesseract
 opencv-python
+transformers
+torch
+apt install -y tesseract-ocr

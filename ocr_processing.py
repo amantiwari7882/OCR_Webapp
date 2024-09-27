@@ -1,24 +1,19 @@
-import pytesseract
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from PIL import Image
-import streamlit as st
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-# Image upload and OCR function
-def ocr_image(image):
-    return pytesseract.image_to_string(image, lang='eng+hin')
+# Load the model and processor from Hugging Face
+processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
+model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")
 
-# Web app
-st.title("OCR and Document Search")
-uploaded_image = st.file_uploader("Upload an Image", type=["png", "jpg", "jpeg"])
+# Function to perform OCR using Hugging Face
+def ocr_image(image_path):
+    image = Image.open(image_path).convert("RGB")
+    pixel_values = processor(images=image, return_tensors="pt").pixel_values
+    generated_ids = model.generate(pixel_values)
+    generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+    return generated_text
 
-if uploaded_image is not None:
-    image = Image.open(uploaded_image)
-    extracted_text = ocr_image(image)
-    st.text_area("Extracted Text", extracted_text)
-
-    search_query = st.text_input("Search Keywords")
-    if search_query:
-        if search_query.lower() in extracted_text.lower():
-            st.write(f"Found '{search_query}' in the text!")
-        else:
-            st.write("No matches found.")
+# Example usage
+image_path = 'path_to_image.jpg'
+extracted_text = ocr_image(image_path)
+print(extracted_text)
