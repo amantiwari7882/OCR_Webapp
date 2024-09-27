@@ -1,148 +1,108 @@
-# OCR and Document Search Web Application
+# OCR Web Application
 
-This is a simple web-based application that allows users to upload an image, extract text using Optical Character Recognition (OCR), and perform keyword searches on the extracted text. The application is built using Python, Pytesseract, and Streamlit for the web interface.
-
----
-
-## Table of Contents
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Deployment](#deployment)
-- [Assumptions](#assumptions)
-- [Technologies Used](#technologies-used)
-
----
-
-## Project Overview
-This project demonstrates the ability to:
-- Perform OCR on an uploaded image that contains text in both **Hindi** and **English**.
-- Extract text from the image using the `pytesseract` library.
-- Allow users to enter keywords to search within the extracted text.
-- Highlight and return the search results directly on the web page.
-
----
+This project demonstrates an OCR (Optical Character Recognition) web application that processes images containing text in both Hindi and English languages. The application extracts text from the uploaded images and allows users to search for specific keywords within the extracted text.
 
 ## Features
-1. **Image Upload**: Users can upload an image in common formats such as JPEG, PNG, etc.
-2. **Text Extraction**: The app uses Tesseract to extract text in both English and Hindi from the uploaded image.
-3. **Keyword Search**: Users can search for specific keywords within the extracted text, with the results displayed directly on the same page.
-4. **Simple UI**: The interface is built with Streamlit, providing an easy-to-use, intuitive web interface.
+- Upload images in common formats (JPEG, PNG, etc.).
+- Extract text in both **Hindi** and **English** from the uploaded images using OCR.
+- Search for specific keywords in the extracted text and display the matching results.
+- Simple, user-friendly interface.
+- Deployed on Hugging Face Spaces using Streamlit.
 
----
+## Tech Stack
+- **Python**: Core programming language for developing the application.
+- **Streamlit**: Web framework for building and deploying the app interface.
+- **Tesseract OCR**: Open-source OCR engine for text extraction.
+- **Pytesseract**: Python wrapper for Tesseract OCR.
+- **Transformers and PyTorch**: For enhanced OCR model integration (if applicable).
 
-## Installation
+## Setup and Installation
 
-### Prerequisites
-- **Python 3.8+**
-- **Tesseract OCR**: You need to install Tesseract OCR on your system. Follow the instructions below based on your operating system:
-
-#### **Windows**:
-1. Download Tesseract from [here](https://github.com/UB-Mannheim/tesseract/wiki).
-2. Install it, and add the installation directory (e.g., `C:\Program Files\Tesseract-OCR\`) to your system's PATH environment variable.
-
-#### **macOS**:
-```bash
-brew install tesseract
-```
-
-#### **Linux**:
-```bash
-sudo apt-get install tesseract-ocr
-```
-
-### Step-by-Step Instructions
+### Local Setup
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/amantiwari7882/OCR_Webapp.git
+   cd OCR_Webapp
    ```
 
-2. **Set up the Virtual Environment**:
+2. **Create a Virtual Environment**:
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
    ```
 
-3. **Install the Required Dependencies**:
+3. **Install Dependencies**:
+   Install the required Python libraries listed in the `requirements.txt` file:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Verify Tesseract Installation**:
-   Ensure that Tesseract is installed and available in your system PATH. You can verify this by running:
+4. **Install Tesseract**:
+   - On Windows, download and install [Tesseract OCR](https://github.com/tesseract-ocr/tesseract).
+   - On Linux (for example, Ubuntu), run the following command:
+     ```bash
+     sudo apt install tesseract-ocr
+     ```
+
+5. **Run the Application**:
+   Launch the Streamlit app locally using the following command:
    ```bash
-   tesseract --version
+   streamlit run app.py
    ```
 
----
+6. **Visit the Web Interface**:
+   Once the app is running, open your browser and navigate to `http://localhost:8501` to use the application.
+
+### Deployment to Hugging Face Spaces
+
+To deploy the app to Hugging Face Spaces, follow these steps:
+
+1. **Create a Space** on Hugging Face with the SDK set to **Streamlit**.
+2. **Push your code** to the Hugging Face Space repository:
+   ```bash
+   git add .
+   git commit -m "Initial deployment"
+   git push origin main
+   ```
+3. Hugging Face Spaces will automatically build and deploy the application.
 
 ## Usage
+- Upload an image containing Hindi and/or English text.
+- Click the **Extract Text** button to run OCR on the image.
+- Once the text is extracted, you can enter a keyword in the search bar and click **Search** to find the occurrences of that word in the extracted text.
+  
+## Example
 
-1. **Run the Web Application**:
-   ```bash
-   streamlit run app.py
+1. Upload an image (for example, a signboard with Hindi and English text).
+2. The application will extract text, which might look like this:
+   ```text
+   "Welcome to the store. स्वागत है।"
    ```
-   This will start the Streamlit web server. The app will be available at `http://localhost:8501` in your web browser.
+3. Search for the keyword "store" or "स्वागत" to highlight it in the extracted text.
 
-2. **Upload an Image**:
-   - On the web page, upload an image (JPEG, PNG) containing text in both Hindi and English.
-   - The application will display the uploaded image and extract text from it.
+## Project Structure
 
-3. **Search for Keywords**:
-   - After extracting text, enter a keyword in the search box.
-   - The app will search the extracted text and inform whether the keyword is found or not.
+```
+OCR_Webapp/
+│
+├── app.py               # Main application file for Streamlit
+├── README.md            # Project documentation
+├── requirements.txt     # Python dependencies
+└── .gitignore           # Files to ignore in version control
+```
 
----
+## Dependencies
 
-## Deployment
+- `streamlit`: For building the web interface.
+- `pytesseract`: For performing OCR.
+- `Pillow`: For image processing.
+- `transformers` and `torch`: For advanced OCR model integrations.
+- `opencv-python`: For handling image operations.
 
-You can deploy the app on any platform that supports Streamlit, such as **Streamlit Sharing** or **Hugging Face Spaces**.
-
-### Deploy on Streamlit Sharing:
-1. Push your project to GitHub.
-2. Go to [Streamlit Sharing](https://streamlit.io/sharing) and connect your GitHub repository.
-3. Select the repository and branch, and deploy the app.
-
-Alternatively, you can deploy the app on **Hugging Face Spaces** following similar steps.
-
----
-
-## Assumptions
-- The images uploaded contain clear, readable text in both English and Hindi.
-- Tesseract OCR is capable of handling these languages effectively.
-- The application currently supports searching for a single keyword at a time.
+## Future Improvements
+- Enhance the OCR accuracy for multi-language support.
+- Add support for more image formats.
+- Implement batch processing of multiple images.
 
 ---
-
-## Technologies Used
-- **Python 3.8+**: The programming language used to build the backend of the application.
-- **Streamlit**: A Python-based web framework for creating web applications.
-- **Pytesseract**: A Python wrapper for the Tesseract OCR engine.
-- **Tesseract**: An open-source OCR engine used to extract text from images.
-- **Pillow**: A Python Imaging Library to handle image uploads and manipulations.
-
----
-
-## Troubleshooting
-
-1. **TesseractNotFoundError**:
-   If you see the error `TesseractNotFoundError: tesseract is not installed or it's not in your PATH`, ensure Tesseract is installed and properly added to your system's PATH environment variable. You can explicitly set the path in your code:
-   ```python
-   import pytesseract
-   pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-   ```
-
-2. **Streamlit not opening in the browser**:
-   Make sure you're running the app using:
-   ```bash
-   streamlit run app.py
-   ```
-
----
-
-## Conclusion
-
-This project demonstrates how to build a web-based OCR and search tool for handling both English and Hindi text in images. The app is lightweight, user-friendly, and easy to deploy on any platform that supports Python and Streamlit.
