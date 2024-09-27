@@ -1,4 +1,6 @@
+transformers
+torch
+gradio
 streamlit
-easyocr
-Pillow
-numpy
+pytesseract
+opencv-python
