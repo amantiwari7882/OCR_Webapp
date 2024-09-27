@@ -2,6 +2,7 @@ import pytesseract
 from PIL import Image
 import streamlit as st
 
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 # Image upload and OCR function
 def ocr_image(image):
     return pytesseract.image_to_string(image, lang='eng+hin')
